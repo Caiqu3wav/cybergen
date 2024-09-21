@@ -7,6 +7,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"cybergen/src/pkg/models"
 )
 
 var DB *gorm.DB
@@ -43,4 +44,8 @@ func ConnectDatabase() error {
 	DB = db 
 	log.Println("Conexão com o banco de dados estabelecida com sucesso!")
     return nil
+}
+
+func AutoMigrate(db *gorm.DB) {
+	db.AutoMigrate(&models.User{}, &models.NFT{})
 }

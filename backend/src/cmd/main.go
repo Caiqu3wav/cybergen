@@ -5,13 +5,12 @@ import (
 	"net/http"
     "github.com/gorilla/mux"
 	"cybergen/src/pkg/database"
+	"cybergen/src/pkg/routes"
 	"github.com/joho/godotenv"
-	"path/filepath"
 )
 
 func main() {
-	envPath := filepath.Join("..", "..", ".env")
-	err := godotenv.Load(envPath)
+	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Erro ao carregar .env: %v", err)
 	}
@@ -22,10 +21,12 @@ func main() {
 		log.Fatalf("Falha ao conectar ao banco: %v", err)
 	}
 
+	database.AutoMigrate(database.DB)
+
 	r := mux.NewRouter()
+	routes.RegisterRoutes(r)
 
-
-	log.Println("iniciando servidor na porta")
+	log.Println("iniciando servidor na porta 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
 

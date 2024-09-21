@@ -9,6 +9,8 @@ require (
 	gorm.io/gorm v1.25.12
 )
 
+require github.com/google/uuid v1.6.0 // indirect
+
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
