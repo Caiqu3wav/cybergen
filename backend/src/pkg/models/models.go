@@ -10,6 +10,7 @@ type User struct {
 	Name     string 	`gorm:"type:varchar(50);unique;not null"`
 	Email    string	 `gorm:"type:varchar(100);not null"`
 	Password string  `gorm:"type:varchar(60);not null"`
+	Cpf		 string  `gorm:"type:varchar(11);not null"`
 	NFTs     []NFT  `gorm:"foreignKey:OwnerId"`
 }
 
