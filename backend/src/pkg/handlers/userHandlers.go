@@ -5,7 +5,6 @@ import (
 	"cybergen/src/pkg/models"
 	"encoding/json"
 	"net/http"
-
 	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
 )
