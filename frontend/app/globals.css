@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .hero-sec{
-  background-image: url(../public/assets/blockchain-image.jfif);
+  background-image: url(../public/assets/particlesblue.gif);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

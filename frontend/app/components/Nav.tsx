@@ -1,13 +1,16 @@
 import React from 'react'
+import SearchInput from '../ui/SearchInput.jsx';
 
 export default function Nav() {
   return (
-    <nav>
+    <nav className='flex flex-col gap-2 items-center'>
+      <SearchInput/>
       <ul className='flex gap-6 items-center'>
-        <li>Home</li>
-        <li>NFT's</li>
-        <li>Sobre</li>
-        <li>Loja</li>
+        <li>Explore</li>
+        <li>About</li>
+        <li>MarketPlace</li>
+        <li>Collections</li>
+        <li>Artists</li>
       </ul>
     </nav>
   )
