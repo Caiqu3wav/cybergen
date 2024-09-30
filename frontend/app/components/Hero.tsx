@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import HeroCarousel from './HeroCarousel';
 
 export default function Hero() {
   return (
@@ -8,6 +9,7 @@ export default function Hero() {
       <p>The modern decentralizated generation that provides
         trade and merch of modern products and coins
       </p>
+      <HeroCarousel/>
       </div>
     </section>
   )

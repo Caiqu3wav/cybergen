@@ -5,7 +5,7 @@ export default function Nav() {
   return (
     <nav className='flex flex-col gap-2 items-center'>
       <SearchInput/>
-      <ul className='flex gap-6 items-center'>
+      <ul className='flex gap-6 items-center text-rose-300'>
         <li>Explore</li>
         <li>About</li>
         <li>MarketPlace</li>
