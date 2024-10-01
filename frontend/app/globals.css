@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  overflow-x: hidden;
+  height: 100vh;
+}
+
 .hero-sec{
   background-image: url(../public/assets/particlesblue.gif);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  --tw-bg-opacity: 0.5
+  --tw-bg-opacity: 0.5;
+  height: 100%;
 }

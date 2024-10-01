@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import SessionProvider  from './providers/authProviders'
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,12 +21,14 @@ export const metadata: Metadata = {
   description: "A nft marketplace web3 site",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
+    <SessionProvider session={session}>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -31,5 +36,6 @@ export default function RootLayout({
         {children}
       </body>
     </html>
+    </SessionProvider>
   );
 }

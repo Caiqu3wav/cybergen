@@ -45,8 +45,9 @@ const config: Config = {
         'lowthreetwo':{'max': '234px'},
       },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        mainColor: "#60a5fa",
+        mainSecondColor: "#000",
+        tertiaryColor: "#9333ea",
       },
     },
   },

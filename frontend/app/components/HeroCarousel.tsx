@@ -13,7 +13,7 @@ export default function HeroCarousel() {
 
 
   return (
-    <div className="flex w-full px-[240px] h-fit min-h-52 items-center justify-center">
+    <div className="flex w-full h-fit min-h-52 items-center justify-center">
       <Swiper modules={[Navigation, Pagination, Autoplay]}
         autoplay={{
           delay: 3000, 
@@ -21,14 +21,15 @@ export default function HeroCarousel() {
         }}
         centeredSlides={true}
         slidesPerView={3}
-        spaceBetween={40}
+        spaceBetween={20}
         navigation
-        pagination={{ clickable: true }} className='flex w-full h-full'>
+        pagination={{ clickable: true, bulletClass: 'swiper-pagination-bullet' }} className='flex w-full h-full'>
                           {nfts.map((nft) => (
             <SwiperSlide className='min-h-fit py-8' key={nft.id}>
                     <div className='flex flex-col items-center gap-3 justify-center h-fit text-white'>
-                        <img src={nft.image} alt={nft.name} className='w-[280px] h-[280px]' />
+                        <img src={nft.image} alt={nft.name} className='w-[200px] h-[200px]' />
                         <p className='text-white'>{nft.name}</p>
+                        <p>{nft.description}</p>
                         <p className='text-white'>{nft.price}</p>
                     </div>
             </SwiperSlide>
