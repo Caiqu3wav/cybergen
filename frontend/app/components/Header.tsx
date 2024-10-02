@@ -24,9 +24,11 @@ export default function Header() {
       rounded-lg bg-gradient-to-br from-purple-600 to-black text-white'>
         <p>Login</p> 
       <IoAccessibility size={20}/>
-      </Link> : 
+      </Link> :
+              <div className=''>
           <button className='w-[100px] flex items-center justify-around h-8 
           rounded-lg bg-gradient-to-br from-purple-600 to-black text-white'><p>SignOut</p> <VscSignOut size={20}/></button>
+          </div>
       }
       
       </div>
