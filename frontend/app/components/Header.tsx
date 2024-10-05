@@ -8,7 +8,7 @@ import { IoAccessibility } from "react-icons/io5"
 import {useSession} from 'next-auth/react'
 import profileFic from '@/public/assets/evolutive.jpg'
 import ProfileModal from './ProfileModal'
-import LoginModal from './LoginModal'
+import LoginModal from './ConnectModal'
 
 export default function Header() {
 const {data: session} = useSession();

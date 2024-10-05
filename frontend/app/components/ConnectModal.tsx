@@ -1,17 +1,36 @@
+import { useState } from "react";
 import { MdOutlineMailLock } from "react-icons/md";
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignUpForm";
+import cyberGenLogo from '@/public/assets/logo.png'
+import Image from "next/image";
 
 interface ConnectWallet {
     isOpen: boolean,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export default function ConnectWallet({isOpen, setIsOpen}: ConnectWallet) {
+export default function ConnectModal({isOpen, setIsOpen}: ConnectWallet) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginFormVisible, setLoginFormVisible] = useState(false);
+  const [signupFormVisible, setSignupFormVisible] = useState(false);
 
   return (
     <>
       {isOpen && (
         <div className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300">
-          <div className="relative m-4 w-1/4 rounded-lg bg-white shadow-sm">
+          <div className="relative flex flex-col pt-2 items-center justify-center m-4 w-1/4 rounded-lg bg-white shadow-sm">
+          <Image src={cyberGenLogo} alt="logo" className="w-20 rounded-full h-auto" />
+          {isLoading ? (
+            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+          )
+          : loginFormVisible ? (
+              <LoginForm  setIsLoading={setIsLoading} setSignupFormVisible={setSignupFormVisible} setIsOpen={setLoginFormVisible}/>
+          ) : signupFormVisible ? (
+              <SignupForm setIsLoading={setIsLoading} setLoginFormVisible={setLoginFormVisible} setIsOpen={setSignupFormVisible}/>
+          )
+         :  (
+            <>
             <div className="flex items-start justify-between p-4">
               <div>
                 <h5 className="text-xl font-medium text-slate-800">Connect a Wallet</h5>
@@ -51,7 +70,7 @@ export default function ConnectWallet({isOpen, setIsOpen}: ConnectWallet) {
 
               <div>
                 <p className="pt-3 text-xs uppercase text-slate-500">Other</p>
-                <button className="mt-3 w-full flex items-center justify-center border border-slate-300 py-2 px-4 text-sm text-slate-600 transition-all hover:text-white hover:bg-slate-800">
+                <button onClick={() => setLoginFormVisible(!loginFormVisible)} className="mt-3 w-full flex items-center justify-center border border-slate-300 py-2 px-4 text-sm text-slate-600 transition-all hover:text-white hover:bg-slate-800">
                 <MdOutlineMailLock size={20} color="blue" className="mr-2" />
                 Connect with Email
                 </button>
@@ -64,7 +83,9 @@ export default function ConnectWallet({isOpen, setIsOpen}: ConnectWallet) {
                 Learn More
               </button>
             </div>
-          </div>
+            </>
+        )}
+                </div>
         </div>
       )}
     </>
