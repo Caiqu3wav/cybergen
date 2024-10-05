@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
@@ -56,7 +57,7 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		Expires: expirationTime,
 	})
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"token": tokenString})
+	json.NewEncoder(w).Encode(map[string]interface{}{"user": user, "token": tokenString})
 }
 
 
