@@ -9,7 +9,7 @@ type User struct {
 	ID		uuid.UUID	 `gorm:"type:uuid;default:uuid_generate_v4();primaryKey"`
 	Name     string 	`gorm:"type:varchar(50);unique;"`
 	Email    string	 `gorm:"type:varchar(100);not null"`
-	Password string  `gorm:"type:varchar(60);not null"`
+	Password string  `gorm:"type:varchar(60);"`
 	ProfileImage string   `gorm:"type:varchar(255)"`
 	Bio		 string   `gorm:"type:text"`
 	NFTs     []NFT  `gorm:"foreignKey:OwnerId"`

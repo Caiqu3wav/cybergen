@@ -1,0 +1,72 @@
+import { MdOutlineMailLock } from "react-icons/md";
+
+interface ConnectWallet {
+    isOpen: boolean,
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+export default function ConnectWallet({isOpen, setIsOpen}: ConnectWallet) {
+
+  return (
+    <>
+      {isOpen && (
+        <div className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300">
+          <div className="relative m-4 w-1/4 rounded-lg bg-white shadow-sm">
+            <div className="flex items-start justify-between p-4">
+              <div>
+                <h5 className="text-xl font-medium text-slate-800">Connect a Wallet</h5>
+                <p className="text-slate-500 text-sm font-light">Choose which wallet to connect</p>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="relative h-8 w-8 text-blue-gray-500 transition-all hover:bg-blue-gray-500/10"
+                type="button"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="h-5 w-5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="px-4">
+              <div className="mb-6">
+                <p className="pt-3 text-xs uppercase text-slate-500">Popular</p>
+                <button className="w-full mt-3 flex items-center justify-center border border-slate-300 py-2 px-4 text-sm text-slate-600 transition-all hover:text-white hover:bg-slate-800">
+                  <img src="https://docs.material-tailwind.com/icons/metamask.svg" alt="metamask" className="h-5 w-5 mr-2" />
+                  Connect Wallet
+                </button>
+
+                <button className="w-full mt-2 flex items-center justify-center border border-slate-300 py-2 px-4 text-sm text-slate-600 transition-all hover:text-white hover:bg-slate-800">
+                  <img src="https://docs.material-tailwind.com/icons/coinbase.svg" alt="coinbase" className="h-5 w-5 mr-2 rounded-md" />
+                  Connect with Coinbase
+                </button>
+              </div>
+
+              <div>
+                <p className="pt-3 text-xs uppercase text-slate-500">Other</p>
+                <button className="mt-3 w-full flex items-center justify-center border border-slate-300 py-2 px-4 text-sm text-slate-600 transition-all hover:text-white hover:bg-slate-800">
+                <MdOutlineMailLock size={20} color="blue" className="mr-2" />
+                Connect with Email
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between p-4 text-blue-gray-500 mt-2">
+              <p className="text-sm text-slate-500">New to Ethereum wallets?</p>
+              <button className="border border-slate-300 py-2 px-4 text-sm text-slate-600 transition-all hover:text-white hover:bg-slate-800">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

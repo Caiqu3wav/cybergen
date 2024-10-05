@@ -1,16 +1,19 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import cyberGenLogo from '@/public/assets/logo.png'
 import Image from 'next/image'
 import Nav from './Nav'
 import Link from 'next/link'
 import { IoAccessibility } from "react-icons/io5"
 import {useSession} from 'next-auth/react'
-import { VscSignOut } from "react-icons/vsc"
+import profileFic from '@/public/assets/evolutive.jpg'
+import ProfileModal from './ProfileModal'
+import LoginModal from './LoginModal'
 
 export default function Header() {
-  const {data: session} = useSession();
-
+const {data: session} = useSession();
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
 
   return (
     <header className='flex justify-between items-center
@@ -19,18 +22,25 @@ export default function Header() {
       <Image src={cyberGenLogo} className="w-20 rounded-full"  alt="logo" />
       </Link>
       <Nav/>
-      <div className='w-fit opacity-60'>
-        {!session ? <Link href="/login" className='w-[100px] flex items-center justify-around h-8 
+      <div className='w-fit'>
+      {!session ? (
+        <>
+        <button onClick={() => setLoginModal(!loginModal)} className='w-[100px] flex items-center justify-around h-8 
       rounded-lg bg-gradient-to-br from-purple-600 to-black text-white'>
         <p>Login</p> 
       <IoAccessibility size={20}/>
-      </Link> :
-              <div className=''>
-          <button className='w-[100px] flex items-center justify-around h-8 
-          rounded-lg bg-gradient-to-br from-purple-600 to-black text-white'><p>SignOut</p> <VscSignOut size={20}/></button>
-          </div>
-      }
-      
+      </button>
+      {loginModal && <LoginModal isOpen={loginModal} setIsOpen={setLoginModal}/>}
+      </>
+    ) : (
+        <>
+        <button onClick={() => setProfileModalOpen(!profileModalOpen)} className='mr-6'>
+          <Image src={profileFic} alt='profile pic' className='rounded-full w-[60px]'/>
+        </button>
+      {profileModalOpen && <ProfileModal isOpen={profileModalOpen}/>}
+      </>
+    )
+  }
       </div>
     </header>
   )
