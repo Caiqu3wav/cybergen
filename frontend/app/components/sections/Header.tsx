@@ -2,13 +2,13 @@
 import React, { useState } from 'react'
 import cyberGenLogo from '@/public/assets/logo.png'
 import Image from 'next/image'
-import Nav from './Nav'
+import Nav from '../Nav'
 import Link from 'next/link'
 import { IoAccessibility } from "react-icons/io5"
 import {useSession} from 'next-auth/react'
 import profileFic from '@/public/assets/evolutive.jpg'
-import ProfileModal from './ProfileModal'
-import LoginModal from './ConnectModal'
+import ProfileModal from '../ProfileModal'
+import LoginModal from '../ConnectModal'
 
 export default function Header() {
 const {data: session} = useSession();
@@ -34,6 +34,7 @@ const {data: session} = useSession();
       </>
     ) : (
         <>
+        <p className='mr-6 text-white'>{session.user?.name}</p>
         <button onClick={() => setProfileModalOpen(!profileModalOpen)} className='mr-6'>
           <Image src={profileFic} alt='profile pic' className='rounded-full w-[60px]'/>
         </button>

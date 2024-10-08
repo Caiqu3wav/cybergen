@@ -5,14 +5,11 @@ import (
 	"cybergen/src/pkg/models"
 	"encoding/json"
 	"net/http"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtkey = []byte("my_secret_key")
 
 type Credentials struct {
 	Name string `json:"name"`
@@ -38,26 +35,9 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Senha incorreta", http.StatusUnauthorized)
 		return
 	}
-	
-	expirationTime := time.Now().Add(24 * time.Hour)
-	claims := &jwt.StandardClaims{
-		ExpiresAt: expirationTime.Unix(),
-		Subject: user.Email,
-	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(jwtkey)
-	if err != nil {
-		http.Error(w, "Falha ao gerar token", http.StatusInternalServerError)
-		return
-	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name: "token",
-		Value: tokenString,
-		Expires: expirationTime,
-	})
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]interface{}{"user": user, "token": tokenString})
+	json.NewEncoder(w).Encode(map[string]interface{}{"user": user})
 }
 
 

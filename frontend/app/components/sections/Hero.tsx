@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import HeroCarousel from './HeroCarousel';
+import HeroCarousel from '../HeroCarousel';
 
 export default function Hero() {
   return (

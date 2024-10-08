@@ -20,6 +20,7 @@ interface SignUpFormProps {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [signupResult, setSignupResult] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const router = useRouter();
 
@@ -34,7 +35,7 @@ interface SignUpFormProps {
     setIsLoading(true);
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_NODE_API_URL}/signup`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,17 +45,20 @@ interface SignUpFormProps {
 
         setIsLoading(false);
 
-        if (!response.ok) {
-            throw new Error('Falha no cadastro');
-        }
+        if (!response || !response.ok) {
+            const errorData = await response.json();
+            const errorText = errorData?.message || 'Falha ao tentar fazer cadastro';
+            setErrorMessage(errorText);
+            return;
+          }
 
         setSignupResult('Cadastro realizado com sucesso! Redirecionando para login...');
         setTimeout(() => {
-            router.push('/auth/login');
+            router.refresh();
         }, 2000);
     } catch (error) {
       setIsLoading(false);
-        setSignupResult('Erro ao fazer cadastro. Tente novamente.');
+        setErrorMessage('Erro ao fazer cadastro. Tente novamente.');
     }
 };
 
@@ -65,6 +69,12 @@ const changeToLogin = () => {
 
    return (
         <form className='flex flex-col items-center justify-center gap-3' onSubmit={handleSignup}>
+            {signupResult ? (
+                <p style={{ color: 'green' }}>{signupResult}</p>
+            ) : errorMessage ? (
+                <p style={{ color: 'red' }}>{errorMessage}</p>
+            ) : (
+                <>
             <button onClick={() => setIsOpen(false)}><IoReturnUpBackSharp size={25}/></button>
           <h1 className='text-white'>Create your account</h1>
           <label>Name:
@@ -109,10 +119,10 @@ const changeToLogin = () => {
                        {isVisible ? <BsEyeSlashFill /> : <LiaEyeSolid />}
                     </button>
                 </label>
-                {signupResult && <p style={{ color: 'red' }}>{signupResult}</p>}
-                       <button type='submit'>Sign</button>
-            <p>Already have your account yet? Go to login: </p> <button onClick={changeToLogin} className='text-blue-600'>Login</button>	
+                    <button type='submit'>Sign</button>
+            <p>Already have your account yet? Go to login: </p> <button onClick={changeToLogin} className='text-blue-600'>Login</button>
+            </>
+        )}	
         </form>
    )
  }
- 

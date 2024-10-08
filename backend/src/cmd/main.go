@@ -7,6 +7,7 @@ import (
 	"cybergen/src/pkg/database"
 	"cybergen/src/pkg/routes"
 	"github.com/joho/godotenv"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -25,8 +26,17 @@ func main() {
 
 	r := mux.NewRouter()
 	routes.RegisterRoutes(r)
+
+	corsOptions := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"}, 
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
+
+	handler := corsOptions.Handler(r)
 	
 	log.Println("iniciando servidor na porta 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
 

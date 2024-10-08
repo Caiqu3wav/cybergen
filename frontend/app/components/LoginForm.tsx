@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client'
 import { signIn } from 'next-auth/react';
 import { BsEyeSlashFill } from "react-icons/bs";
 import { IoReturnUpBackSharp } from "react-icons/io5";
 import { LiaEyeSolid } from "react-icons/lia";
 import React, { useState } from 'react';
-
 
 interface LoginFormProps {
     setIsLoading: (isLoading: boolean) => void;
@@ -14,10 +14,9 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ setIsLoading, setIsOpen, setSignupFormVisible }: LoginFormProps) {
-    const [loginError, setLoginError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
+    const [errorMessage, setErrorMessage] = useState('');
 
     const isValidEmail = (email: string) => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -30,12 +29,12 @@ export default function LoginForm({ setIsLoading, setIsOpen, setSignupFormVisibl
         const password = e.target[1].value;
 
         if (!isValidEmail(email)) {
-            setLoginError("Email inválido");
+            setErrorMessage("Email inválido");
             return;
         }
 
         if (!password || password.length < 8) {
-            setLoginError("Senha inválida");
+            setErrorMessage("Senha inválida");
             return;
         }
 
@@ -52,12 +51,12 @@ export default function LoginForm({ setIsLoading, setIsOpen, setSignupFormVisibl
             console.log("Sign in Response: ", res);
 
             if (!res || res.ok !== true) {
-                setLoginError("Email ou senha inválidos");
+                setErrorMessage("Email ou senha inválidos");
             } else {
                 setSuccessMessage("Usuário logado com sucesso!");
             }
         } catch (error) {
-            setLoginError("Email ou senha inválidos");
+            setErrorMessage("Email ou senha inválidos");
         } finally {
             setIsLoading(false);
         }
@@ -70,6 +69,10 @@ export default function LoginForm({ setIsLoading, setIsOpen, setSignupFormVisibl
 
     return (
         <form className='flex flex-col items-center justify-center gap-3' onSubmit={handleLogin}>
+            {errorMessage ? <p style={{ color: 'red' }}>{errorMessage}</p> : successMessage ?  (
+             <p style={{ color: 'green' }}>{successMessage}</p> 
+            ) : (
+                <>
             <button onClick={() => setIsOpen(false)}><IoReturnUpBackSharp size={25}/></button>
             <h1 className='text-white'>Enter your account</h1>
             <label>Email:
@@ -89,11 +92,10 @@ export default function LoginForm({ setIsLoading, setIsOpen, setSignupFormVisibl
                     {showPassword ? <BsEyeSlashFill /> : <LiaEyeSolid />}
                 </button>
             </label>
-            {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-
             <button type='submit'>Login</button>
             <p>Don't have your account yet? Go to signup: </p> <button onClick={changeToSignUp} className='text-blue-600'>Register</button>
+            </>
+        )}
         </form>
     )
 }
