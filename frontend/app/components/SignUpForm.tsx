@@ -4,8 +4,8 @@
 import React, { useState } from 'react'
 import { LiaEyeSolid } from "react-icons/lia"
 import { BsEyeSlashFill } from "react-icons/bs"
-import { useRouter } from 'next/navigation'
 import { IoReturnUpBackSharp } from "react-icons/io5";
+import axios from 'axios';
 
 interface SignUpFormProps {
     setIsLoading: (isLoading: boolean) => void;
@@ -22,45 +22,40 @@ interface SignUpFormProps {
   const [isVisible, setIsVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const router = useRouter();
 
   const handleSignup = async (e: any) => {
     e.preventDefault();
+    
 
     if (password !== confirmPassword) {
-        setSignupResult('As senhas não coincidem.');
-        return;
+      setErrorMessage('As senhas não coincidem.');
+      return;
     }
 
     setIsLoading(true);
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, password }),
-        });
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/register`, {
+        name,
+        email,
+        password
+      });
 
-        setIsLoading(false);
+      setIsLoading(false);
 
-        if (!response || !response.ok) {
-            const errorData = await response.json();
-            const errorText = errorData?.message || 'Falha ao tentar fazer cadastro';
-            setErrorMessage(errorText);
-            return;
-          }
-
+      if (response && response.status === 200) {
         setSignupResult('Cadastro realizado com sucesso! Redirecionando para login...');
         setTimeout(() => {
-            router.refresh();
+          setLoginFormVisible(true);
+          setIsOpen(false);
         }, 2000);
-    } catch (error) {
+      }
+    } catch (error: any) {
       setIsLoading(false);
-        setErrorMessage('Erro ao fazer cadastro. Tente novamente.');
+      const errorText = error?.response?.data?.message || 'Erro ao fazer cadastro. Tente novamente.';
+      setErrorMessage(errorText);
     }
-};
+  };
 
 const changeToLogin = () => {
     setIsOpen(false)
@@ -68,15 +63,19 @@ const changeToLogin = () => {
 }
 
    return (
-        <form className='flex flex-col items-center justify-center gap-3' onSubmit={handleSignup}>
-            {signupResult ? (
-                <p style={{ color: 'green' }}>{signupResult}</p>
-            ) : errorMessage ? (
-                <p style={{ color: 'red' }}>{errorMessage}</p>
-            ) : (
-                <>
-            <button onClick={() => setIsOpen(false)}><IoReturnUpBackSharp size={25}/></button>
-          <h1 className='text-white'>Create your account</h1>
+    <div className='flex flex-col items-center justify-center gap-3'>
+            <button type='button' onClick={() => setIsOpen(false)}><IoReturnUpBackSharp size={25}/></button>
+            {signupResult && (
+      <p style={{ color: 'green' }}>{signupResult}</p>
+    )}
+
+    {errorMessage && (
+      <p style={{ color: 'red' }}>{errorMessage}</p>
+    )}
+
+    {!signupResult && !errorMessage && (
+    <form className='flex flex-col items-center justify-center gap-3' onSubmit={handleSignup}>
+    <h1 className='text-white'>Create your account</h1>
           <label>Name:
                     <input className="rounded-lg bg-gray-400"
                     value={name}
@@ -120,9 +119,10 @@ const changeToLogin = () => {
                     </button>
                 </label>
                     <button type='submit'>Sign</button>
-            <p>Already have your account yet? Go to login: </p> <button onClick={changeToLogin} className='text-blue-600'>Login</button>
-            </>
+            <p>Already have your account yet? Go to login: </p>
+             <button onClick={changeToLogin} className='text-blue-600'>Login</button>
+             </form>
         )}	
-        </form>
+        </div>
    )
  }

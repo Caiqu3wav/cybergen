@@ -16,8 +16,9 @@ export const authOptions: AuthOptions = {
                 const { email, password } = credentials;
                 
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/login`, {
-              email, password,
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/login`, {
+              email,
+              password,
             });
   
             if (response.data && response.data.user) {

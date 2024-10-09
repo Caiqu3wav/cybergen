@@ -19,7 +19,8 @@ export default function ConnectModal({isOpen, setIsOpen}: ConnectWallet) {
     <>
       {isOpen && (
         <div className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300">
-          <div className="relative flex flex-col pt-2 items-center justify-center m-4 w-1/4 rounded-lg bg-white shadow-sm">
+          <div className="relative flex flex-col py-2 items-center justify-center m-4 w-[30%] majortwo0.1:w-[40%] majorthree:w-[50%] majorfour2:w-[65%] 
+           midtwo3:w-[94%] rounded-lg bg-white shadow-sm">
           <Image src={cyberGenLogo} alt="logo" className="w-20 rounded-full h-auto" />
           {isLoading ? (
             <div className="lds-ring"><div></div><div></div><div></div><div></div></div>

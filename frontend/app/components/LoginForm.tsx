@@ -69,8 +69,12 @@ export default function LoginForm({ setIsLoading, setIsOpen, setSignupFormVisibl
 
     return (
         <form className='flex flex-col items-center justify-center gap-3' onSubmit={handleLogin}>
+
             {errorMessage ? <p style={{ color: 'red' }}>{errorMessage}</p> : successMessage ?  (
+                <>
+            <button onClick={() => setIsOpen(false)}><IoReturnUpBackSharp size={25}/></button>
              <p style={{ color: 'green' }}>{successMessage}</p> 
+             </>
             ) : (
                 <>
             <button onClick={() => setIsOpen(false)}><IoReturnUpBackSharp size={25}/></button>
