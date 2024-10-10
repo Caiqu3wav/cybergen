@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { MdOutlineMailLock } from "react-icons/md";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignUpForm";
@@ -7,7 +7,7 @@ import Image from "next/image";
 
 interface ConnectWallet {
     isOpen: boolean,
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    setIsOpen: (value: SetStateAction<boolean>) => void,
 }
 
 export default function ConnectModal({isOpen, setIsOpen}: ConnectWallet) {

@@ -16,8 +16,8 @@ const {data: session} = useSession();
   const [loginModal, setLoginModal] = useState(false);
 
   return (
-    <header className='flex justify-between items-center
-     bg-gradient-to-b from-blue-300 to-black h-32 px-3'>
+    <header className='flex fixed top-0 z-50 justify-between items-center
+     bg-gradient-to-b from-blue-300 to-black h-32 px-3 w-full'>
       <Link href="/" className='flex items-center border-solid border-r-2 rounded-3xl border-white pr-6 h-full'>
       <Image src={cyberGenLogo} className="w-20 rounded-full"  alt="logo" />
       </Link>
@@ -34,7 +34,7 @@ const {data: session} = useSession();
       </>
     ) : (
         <>
-        <p className='mr-6 text-white'>{session.user?.name}</p>
+        <p className='mr-6 text-white'>o {session.user?.name}</p>
         <button onClick={() => setProfileModalOpen(!profileModalOpen)} className='mr-6'>
           <Image src={profileFic} alt='profile pic' className='rounded-full w-[60px]'/>
         </button>

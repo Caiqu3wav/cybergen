@@ -1,8 +1,8 @@
 import React from 'react'
 import NftCard from './NftCard';
+import "../styles/mainNfts.css"
 
 export default function MainNfts() {
-
 
   return (
     <div className='bg-gradient-to-b from-black to-mainColor flex items-center w-full justify-center min-h-[650px]'>

@@ -5,6 +5,7 @@ import { BsWatch } from "react-icons/bs";
 import { BsTools } from "react-icons/bs";
 import { GiTrade } from "react-icons/gi";
 import { IoSettings } from "react-icons/io5";
+import { LiaSignOutAltSolid } from 'react-icons/lia'
 
 interface ModalProps {
   isOpen: boolean,
@@ -27,7 +28,7 @@ export default function ProfileModal({isOpen}: ModalProps) {
       <hr />
       <Link href="" className='flex items-center'><IoSettings size={20}/> <strong className='ml-2'>Settings</strong></Link>
       </div>
-                <button onClick={() => signOut()} className='mt-4 text-red-500'>Sign Out</button>
+                <button onClick={() => signOut()} className='mt-4 flex items-center gap-2 text-red-500'>Sign Out <LiaSignOutAltSolid/></button>
     </div>
     )}
     </>

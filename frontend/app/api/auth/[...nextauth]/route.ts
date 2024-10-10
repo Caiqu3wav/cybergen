@@ -20,11 +20,18 @@ export const authOptions: AuthOptions = {
               email,
               password,
             });
-  
-            if (response.data && response.data.user) {
-                return response.data.user;
-            }
 
+            const user = {
+              id: response.data.user.ID,
+              name: response.data.user.Name,
+              email: response.data.user.Email,
+              profileImage: response.data.user.ProfileImage,
+            };
+              
+            if (response.data && user) {
+              console.log(user);
+                return user;
+            }
                 return null;
           } catch (error) {
             console.error('Failed to authorize', error);
@@ -33,10 +40,6 @@ export const authOptions: AuthOptions = {
         },
       }),
     ],
-    pages: {
-        signIn: "/auth/login",
-        signOut: "/auth/signout",
-    },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
     async session({ session, token }) {
@@ -50,7 +53,7 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.nome = user.name;
+        token.name = user.name;
         token.email = user.email;
       }
       return token;
